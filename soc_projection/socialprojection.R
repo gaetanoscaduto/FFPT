@@ -1,8 +1,7 @@
 #### Analyses on Soc Projection
 
-#try
-library(ggplot2)
 library(rio)
+library(ggplot2)
 library(margins)
 library(dplyr)
 library(corrplot)
