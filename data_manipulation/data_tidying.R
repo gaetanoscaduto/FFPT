@@ -6,7 +6,7 @@ library(dplyr)
 
 main_path = "C:/Users/gasca/OneDrive - Università degli Studi di Milano-Bicocca/Dottorato/Papers and Chapters/FFPT"
 setwd(paste0(main_path, "/data_manipulation"))
-data = import("FFPT_def_pre_tidy.RDS")
+data = import("FFPT_def_pre_tidy.RDS", encoding = "UTF-8")
 
 ##############################################################################
 
@@ -225,9 +225,9 @@ table(data$macroarea1, data$macroarea2)
 data = data |>
   mutate(citysize, 
          citysize_r1 = case_when(
-           citysize == "Una grande citt?" ~ 4,
-           citysize == "I sobborghi o la periferia di una grande citt?" ~ 3,
-           citysize == "Una citt? di medie dimensioni o cittadina" ~ 2,
+           citysize == "Una grande città" ~ 4,
+           citysize == "I sobborghi o la periferia di una grande città" ~ 3,
+           citysize == "Una città di medie dimensioni o cittadina" ~ 2,
            citysize == "Un paese" ~ 1,
            citysize == "Una casa isolata" ~ 0,
            citysize == "Non saprei" ~ 0,
@@ -273,7 +273,7 @@ data = data |>
            job1 == "In cerca di prima occupazione" ~ "Unemployed",
            job1 == "Pensionato/a" ~ "Inactive",
            job1 == "Casalingo/a" ~ "Inactive",
-           job1 == "Cassa integrazione guadagni o mobilit?"~ "Inactive",
+           job1 == "Cassa integrazione guadagni o mobilità"~ "Inactive",
            job1 == "Studente/essa"~ "Inactive",
            job1 == "Nessuna delle precedenti"~ "Inactive",
            is.na(citysize) ~ NA
@@ -290,8 +290,8 @@ data = data |>
            income == "Vivo senza problemi e riesco a mettere da parte dei risparmi" ~ 4,
            income == "Vivo senza problemi ma non riesco a mettere da parte dei risparmi" ~ 3,
            income == "Riesco ad arrangiarmi facendo qualche rinuncia" ~ 2,
-           income == "Ho delle difficolt? e devo fare tante rinunce ma riesco a vivere col mio reddito" ~ 1,
-           income == "Ho molte difficolt? e non riesco a vivere con il mio reddito" ~ 0,
+           income == "Ho delle difficoltà e devo fare tante rinunce ma riesco a vivere col mio reddito" ~ 1,
+           income == "Ho molte difficoltà e non riesco a vivere con il mio reddito" ~ 0,
            income == "Preferisco non rispondere" ~ NA, #qui ci stanno 21 persone che sarebbe meglio non perdere
            
            is.na(income) ~ NA
@@ -311,8 +311,8 @@ table(data$income_r, data$income)
 data = data |>
   mutate(socposition_SQ001, 
          social_position_r = case_when(
-           socposition_SQ001 == "10 - Al vertice della nostra societ?" ~ 10,
-           socposition_SQ001 == "0 - Al fondo della nostra societ?" ~ 0,
+           socposition_SQ001 == "10 - Al vertice della nostra società" ~ 10,
+           socposition_SQ001 == "0 - Al fondo della nostra società" ~ 0,
            socposition_SQ001 %in% c("1", "2", "3", "4", "5", "6", "7", "8", "9") ~ as.numeric(socposition_SQ001),
            is.na(socposition_SQ001) ~ NA,
            socposition_SQ001 == "Preferisco non rispondere" ~ NA 
@@ -439,7 +439,7 @@ data = data |>
       starts_with("bigfive"),
       ~case_when(.=="Pienamente d'accordo" ~ 4, 
                  .=="Abbastanza d'accordo" ~ 3,
-                 .=="N? d'accordo n? in disaccordo" ~ 2,
+                 .=="Né d'accordo né in disaccordo" ~ 2,
                  .=="Poco d'accordo" ~ 1,
                  .=="Per niente d'accordo" ~ 0,
                  is.na(.) ~ NA),
@@ -509,7 +509,7 @@ table(data$interest_r, data$interest)
 #data = data |>
 #  mutate(exposure, 
 #         exposure_r = case_when(
-#           exposure == "Pi? di due ore" ~ 6,
+#           exposure == "Più di due ore" ~ 6,
 #           exposure == "Fra una e due ore" ~ 5,
 #           exposure == "Fra mezz'ora e un'ora" ~ 4,
 #           exposure == "Fra dieci minuti e mezz'ora" ~ 3,
@@ -526,7 +526,7 @@ table(data$interest_r, data$interest)
 data = data |>
   mutate(exposure, 
          exposure_r1 = case_when(
-           exposure == "Pi? di due ore" ~ "High",
+           exposure == "Più di due ore" ~ "High",
            exposure == "Fra una e due ore" ~ "High",
            exposure == "Fra mezz'ora e un'ora" ~ "High",
            exposure == "Fra dieci minuti e mezz'ora" ~ "High",
@@ -545,7 +545,7 @@ table(data$exposure, data$exposure_r1)
 data = data |>
   mutate(exposure, 
          exposure_r2 = case_when(
-           exposure == "Pi? di due ore" ~ "High",
+           exposure == "Più di due ore" ~ "High",
            exposure == "Fra una e due ore" ~ "High",
            exposure == "Fra mezz'ora e un'ora" ~ "High",
            exposure == "Fra dieci minuti e mezz'ora" ~ "Medium",
@@ -948,7 +948,7 @@ data = data |>
              familyknows == "Nessuno" ~ 0,
              familyknows == "Quasi nessuno" ~ 0.1,
              familyknows == "Alcuni" ~ 0.25,
-             familyknows == "Circa la met?" ~ 0.5,
+             familyknows == "Circa la metà" ~ 0.5,
              familyknows == "Molti" ~ 0.75,
              familyknows == "Quasi tutti" ~ 0.9,
              familyknows == "Tutti" ~ 1,
@@ -967,7 +967,7 @@ data = data |>
              familydisagr == "Nessuno" ~ 0,
              familydisagr == "Quasi nessuno" ~ 0.1,
              familydisagr == "Alcuni" ~ 0.25,
-             familydisagr == "Circa la met?" ~ 0.5,
+             familydisagr == "Circa la metà" ~ 0.5,
              familydisagr == "Molti" ~ 0.75,
              familydisagr == "Quasi tutti" ~ 0.9,
              familydisagr == "Tutti" ~ 1,
@@ -985,7 +985,7 @@ data = data |>
              friendsknows == "Nessuno" ~ 0,
              friendsknows == "Quasi nessuno" ~ 0.1,
              friendsknows == "Alcuni" ~ 0.25,
-             friendsknows == "Circa la met?" ~ 0.5,
+             friendsknows == "Circa la metà" ~ 0.5,
              friendsknows == "Molti" ~ 0.75,
              friendsknows == "Quasi tutti" ~ 0.9,
              friendsknows == "Tutti" ~ 1,
@@ -1007,7 +1007,7 @@ data = data |>
              friendsdisagr == "Nessuno" ~ 0,
              friendsdisagr == "Quasi nessuno" ~ 0.1,
              friendsdisagr == "Alcuni" ~ 0.25,
-             friendsdisagr == "Circa la met?" ~ 0.5,
+             friendsdisagr == "Circa la metà" ~ 0.5,
              friendsdisagr == "Molti" ~ 0.75,
              friendsdisagr == "Quasi tutti" ~ 0.9,
              friendsdisagr == "Tutti" ~ 1,
@@ -1450,7 +1450,7 @@ data = data |>
          expbehav_r = case_when(
            expbehav == "Molto probabile" ~ "Coffee Yes",
            expbehav == "Probabile" ~ "Coffee Yes",
-           expbehav == "N? probabile n? improbabile" ~ "Irrelevant",
+           expbehav == "Né probabile n* improbabile" ~ "Irrelevant",
            expbehav == "Poco probabile" ~ "Coffee No",
            expbehav == "Per nulla probabile" ~ "Coffee No",
            is.na(expbehav) ~ NA
@@ -1469,7 +1469,7 @@ data = data |>
          interaction = case_when(
            expbehav == "Molto probabile" ~ 1,
            expbehav == "Probabile" ~ 1,
-           expbehav == "N? probabile n? improbabile" ~ 0,
+           expbehav == "Né probabile né improbabile" ~ 0,
            expbehav == "Poco probabile" ~ 1,
            expbehav == "Per nulla probabile" ~ 1,
            is.na(expbehav) ~ NA
@@ -1485,7 +1485,7 @@ data = data |>
          expbehav_r1 = case_when(
            expbehav == "Molto probabile" ~ 2,
            expbehav == "Probabile" ~ 1,
-           expbehav == "N? probabile n? improbabile" ~ 0,
+           expbehav == "Né probabile né improbabile" ~ 0,
            expbehav == "Poco probabile" ~ -1,
            expbehav == "Per nulla probabile" ~ -2,
            is.na(expbehav) ~ NA
@@ -1499,7 +1499,7 @@ data = data |>
          expbehav_r2 = case_when(
            expbehav == "Molto probabile" ~ 1,
            expbehav == "Probabile" ~ 1,
-           expbehav == "N? probabile n? improbabile" ~ 0,
+           expbehav == "Né probabile né improbabile" ~ 0,
            expbehav == "Poco probabile" ~ -1,
            expbehav == "Per nulla probabile" ~ -1,
            is.na(expbehav) ~ NA
@@ -1513,7 +1513,7 @@ data = data |>
          expbehav_r2ord = case_when(
            expbehav == "Molto probabile" ~ "Likely",
            expbehav == "Probabile" ~ "Likely",
-           expbehav == "N? probabile n? improbabile" ~ "Neither Likely nor Unlikely",
+           expbehav == "Né probabile né improbabile" ~ "Neither Likely nor Unlikely",
            expbehav == "Poco probabile" ~ "Unlikely",
            expbehav == "Per nulla probabile" ~ "Unlikely",
            is.na(expbehav) ~ NA
@@ -1533,7 +1533,7 @@ data = data |>
          expconv_r1 = case_when(
            expconv == "Molto probabile" ~ 2,
            expconv == "Probabile" ~ 1,
-           expconv == "N? probabile n? improbabile" ~ 0,
+           expconv == "Né probabile né improbabile" ~ 0,
            expconv == "Poco probabile" ~ -1,
            expconv == "Per niente probabile" ~ -2,
            is.na(expconv) ~ NA
@@ -1549,7 +1549,7 @@ data = data |>
          expconv_r2 = case_when(
            expconv == "Molto probabile" ~ 1,
            expconv == "Probabile" ~ 1,
-           expconv == "N? probabile n? improbabile" ~ 0,
+           expconv == "Né probabile né improbabile" ~ 0,
            expconv == "Poco probabile" ~ -1,
            expconv == "Per niente probabile" ~ -1,
            is.na(expconv) ~ NA
@@ -1565,7 +1565,7 @@ data = data |>
          expconv_r2ord = case_when(
            expconv == "Molto probabile" ~ "Likely",
            expconv == "Probabile" ~ "Likely",
-           expconv == "N? probabile n? improbabile" ~ "Neither Likely nor Unlikely",
+           expconv == "Né probabile né improbabile" ~ "Neither Likely nor Unlikely",
            expconv == "Poco probabile" ~ "Unlikely",
            expconv == "Per niente probabile" ~ "Unlikely",
            is.na(expconv) ~ NA
@@ -1586,7 +1586,7 @@ data = data |>
          conversation = case_when(
            expconv == "Molto probabile" ~ 1,
            expconv == "Probabile" ~ 1,
-           expconv == "N? probabile n? improbabile" ~ 0,
+           expconv == "Né probabile né improbabile" ~ 0,
            expconv == "Poco probabile" ~ 1,
            expconv == "Per niente probabile" ~ 1,
            is.na(expconv) ~ NA
@@ -1787,7 +1787,7 @@ data = data |>
          statbehav_r = case_when(
            statbehav == "Molto probabile" ~ 2,
            statbehav == "Probabile" ~ 1,
-           statbehav == "N? probabile n? improbabile" ~ 0,
+           statbehav == "Né probabile né improbabile" ~ 0,
            statbehav == "Poco probabile" ~ -1,
            statbehav == "Per nulla probabile" ~ -2,
            is.na(statbehav) ~ NA
@@ -1802,7 +1802,7 @@ data = data |>
          statbehav_r2 = case_when(
            statbehav == "Molto probabile" ~ 1,
            statbehav == "Probabile" ~ 1,
-           statbehav == "N? probabile n? improbabile" ~ 0,
+           statbehav == "Né probabile né improbabile" ~ 0,
            statbehav == "Poco probabile" ~ 1,
            statbehav == "Per nulla probabile" ~ 1,
            is.na(statbehav) ~ NA
@@ -1817,7 +1817,7 @@ data = data |>
          statconv_r = case_when(
            statconv == "Molto probabile" ~ 2,
            statconv == "Probabile" ~ 1,
-           statconv == "N? probabile n? improbabile" ~ 0,
+           statconv == "Né probabile né improbabile" ~ 0,
            statconv == "Poco probabile" ~ -1,
            statconv == "Per niente probabile" ~ -2,
            is.na(statconv) ~ NA

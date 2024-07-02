@@ -1,35 +1,19 @@
 ########## ANALYSES, DEF POST REVIEW 
 
-library(rio)
-library(ggplot2)
-library(margins)
-library(dplyr)
-library(corrplot)
-library(texreg)
-library(patchwork)
-library(MASS)
-library(gtools)
-library(gt)
-library(gtsummary)
-library(openxlsx)
-library(foreign)
-library(ggplot2)
-library(MASS)
-library(Hmisc)
-library(reshape2)
-library(lmtest)
-library(ordinal)
-library(effects)
 
-main_path = "C:/Users/gasca/OneDrive - Università degli Studi di Milano-Bicocca/Dottorato/Papers and Chapters/FFPT"
+pacman::p_load(rio, ggplot2, margins, dplyr, 
+               corrplot, texreg, patchwork, 
+               MASS, gtools, gt, gtsummary, openxlsx, 
+               foreign, Hmisc, reshape2, lmtest, ordinal, effects)
+
+
+main_path = "C:/Users/gasca/OneDrive - Università degli Studi di Milano-Bicocca/Dottorato/Papers and Chapters/Scaduto Negri 2024"
 setwd(main_path)
 data = import(paste0(main_path,"/data_manipulation/FFPT_tidy.RDS"))
 
-#i eliminate the few data that creates missing values in the model
+#i eliminate the data creating missing values in the model for practicality
 
 datanomiss = data[!is.na(data$sex_r) & !is.na(data$citysize_r2) & !is.na(data$macroarea2), ]
-
-
 
 ###########################################################
 ################## H1a H1b, H1c, H1d #######################
@@ -672,7 +656,7 @@ psociodemo = ggplot(data = summary(mara)[summary(mara)$factor%in% sociodemo, ])+
                       ymax=AME+1.96*SE, 
                       ymin=AME-1.96*SE),
                   col='blue',
-                  shape = 17,
+                #  shape = 17,
                   alpha = 1,
                   position = position_nudge(x = -1/10),
                   show.legend = F)+
@@ -682,7 +666,7 @@ psociodemo = ggplot(data = summary(mara)[summary(mara)$factor%in% sociodemo, ])+
   xlab("")+
   ylab("AME")+
   #ylim(-0.31, 0.31)+
-  labs(caption = "AMEs for models 2a and 2b\nRed triangle  = Partisan PL, Blue circle  = Ideological PL, 95% C.I.")+
+  labs(caption = "AMEs for models 2a and 2b\nTriangle  = Partisan PL, Circle  = Ideological PL, 95% C.I.")+
   # theme(text = element_text(size=rel(4)))+
   coord_flip()
 
@@ -705,7 +689,6 @@ ppoli = ggplot(summary(mara)[!(summary(mara)$factor %in% sociodemo), ])+
                       ymax=AME+1.96*SE, 
                       ymin=AME-1.96*SE),
                   col='blue',
-                  shape = 17,
                   alpha = 1,
                   position = position_nudge(x = -1/10),
                   show.legend = F)+
@@ -795,7 +778,7 @@ independentmodelsforid = ggplot(aus_id)+
   xlab("")+
   ylab("AME")+
   #ylim(-0.31, 0.31)+
-  labs(caption = "AMEs for Models 5a,5b,6a,6b,7a,7b,8a,8b.\nRed triangle = Partisan PL, Blue  = Ideological PL, 95% C.I.")+
+  labs(caption = "AMEs for Models 5a,5b,6a,6b,7a,7b,8a,8b.\nTriangle = Partisan PL, Circle  = Ideological PL, 95% C.I.")+
   #theme(text = element_text(size=rel(5)))+
   coord_flip()
 
@@ -1093,7 +1076,7 @@ ordered_logit_AME_conv_full = ggplot(data= df_0_conv_full)+
   xlab("")+
   ylab("Predicted values for Conversation")+
   labs(#title = "Predicted probabilities for likelihood to converse\nIdeological PL vs No Ideological PL", 
-       caption = "Red triangle = did not do ideological PL \nBlue circle = did ideology PL\n Predicted values for models 2c and 2d")+
+       caption = "Triangle = did not do ideological PL \nCircle = did ideology PL\n Predicted values for models 2c and 2d")+
   scale_y_continuous(breaks = seq(0,0.7, by=0.1), limits = c(0.05,0.7))
 
 
@@ -1177,7 +1160,7 @@ ordered_logit_AME_conv_full = ggplot(data= df_0_conv_full)+
   xlab("")+
   ylab("Predicted values for Conversation")+
   labs(#title = "Predicted probabilities for likelihood to converse\nIdeological PL vs No Ideological PL", 
-    caption = "Red triangle = did not do ideological PL \nBlue circle = did ideology PL\n Predicted values for models 3c and 3d")+
+    caption = "Triangle = did not do ideological PL \nCircle = did ideology PL\n Predicted values for models 3c and 3d")+
   scale_y_continuous(breaks = seq(0,0.7, by=0.1), limits = c(0.05,0.7))
 
 
@@ -1474,7 +1457,7 @@ datanomiss |>
   theme(text = element_text(size=rel(7)))
 
 
-ggsave("Distribution of ideological perception in Control group.jpg",
+ggsave("Distribution of ideological perception in Control group.jpg", path = paste0(main_path,"/plots and tables/plots"),
        width = 20, height = 6)
 
 
@@ -1497,7 +1480,7 @@ datanomiss |>
                                                   "Don't know" = "black"))+
   theme(text = element_text(size=rel(7)))
 
-ggsave("Distribution of ideological perception in Vegan group.jpg",
+ggsave("Distribution of ideological perception in Vegan group.jpg", path = paste0(main_path,"/plots and tables/plots"),
        width = 20, height = 6)
 
 
@@ -1519,7 +1502,7 @@ datanomiss |>
                                                   "Don't know" = "black"))+
   theme(text = element_text(size=rel(7)))
 
-ggsave("Distribution of ideological perception in Ethnic group.jpg",
+ggsave("Distribution of ideological perception in Ethnic group.jpg", path = paste0(main_path,"/plots and tables/plots"), 
        width = 20, height = 6)
 
 
@@ -1541,7 +1524,7 @@ datanomiss |>
                                                   "Don't know" = "black"))+
   theme(text = element_text(size=rel(7)))
 
-ggsave("Distribution of ideological perception in Meat group.jpg",
+ggsave("Distribution of ideological perception in Meat group.jpg", path = paste0(main_path,"/plots and tables/plots"), 
        width = 20, height = 6)
 
 
@@ -1563,7 +1546,7 @@ datanomiss |>
                                                   "Don't know" = "black"))+
   theme(text = element_text(size=rel(7)))
 
-ggsave("Distribution of ideological perception in Traditional group.jpg",
+ggsave("Distribution of ideological perception in Traditional group.jpg", path = paste0(main_path,"/plots and tables/plots"),
        width = 20, height = 6)
 
 
@@ -1586,7 +1569,7 @@ datanomiss |>
                                                   "Don't know" = "black"))+
   theme(text = element_text(size=rel(7)))
 
-ggsave("Distribution of ideological perception in Overall group.jpg",
+ggsave("Distribution of ideological perception in Overall group.jpg", path = paste0(main_path,"/plots and tables/plots"),
        width = 20, height = 6)
 
 
@@ -1890,7 +1873,7 @@ ordered_logit_AME_conv = ggplot(data= df_0_conv)+
   xlab("")+
   ylab("Predicted values for Conversation")+
   labs(#title = "Predicted probabilities for likelihood to converse\nIn-group vs Out-group", 
-       caption = "Red triangle = perceived ideological in-group\nBlue circle = perceived ideological out-group\n Predicted values for models 4c and 4d")+
+       caption = "Triangle = perceived ideological in-group\nCircle = perceived ideological out-group\n Predicted values for models 4c and 4d")+
 
     scale_y_continuous(breaks = seq(0,0.8, by=0.1), limits = c(0,0.8))
 
